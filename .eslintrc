@@ -1,4 +1,4 @@
-module.exports = {
+{
   "env": {
     "browser": true,
     "commonjs": true,
@@ -10,7 +10,7 @@ module.exports = {
   "parserOptions": {
     "ecmaVersion": "latest",
   },
-  "rules": {},
-};
-var foo_;
-foo._bar();
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }]
+  },
+}
