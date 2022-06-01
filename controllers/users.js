@@ -18,7 +18,7 @@ const createUser = (req, res) => {
   }
   User.create({name,about,avatar}).then((user) => {
 
-    res.status(201).send(user);
+    res.status(201).send({data:user});
   }).catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 const updateAvatar = (req, res) => {
