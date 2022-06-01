@@ -16,7 +16,18 @@ const getCards = (req, res) =>
   Card.find({}).then((cards) => {
     res.status(200).send(cards);
   });
-const createCard = (req, res) => Card.create({name,link}).then(() => {});
-const deleteCard = (req, res) => Card.findByIdAndDelete().then(() => {});
+const createCard = (req, res) => {
+  const { name, link } = req.body;
+  Card.create({ name, link })
+    .then((user) => res.status(200).send({ data: user }))
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+};
+const deleteCard = (req, res) => {
+  Card.findByIdAndRemove(req.params.cardId)
+    .then(() => {
+      res.send({ data: user });
+    })
+    .catch(() => res.status(500).send({ message: "Произошла ошибка" }));
+};
 
 module.exports = { likeCard, dislikeCard, getCards, createCard, deleteCard };
