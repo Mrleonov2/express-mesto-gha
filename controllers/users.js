@@ -1,4 +1,4 @@
-/*  eslint no-underscore-dangle: 0 */
+
 const User = require('../models/user');
 
 const getUser = (req, res) => {
@@ -32,11 +32,15 @@ const createUser = (req, res) => {
 };
 const updateAvatar = (req, res) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.params.userId, { avatar }).then((user) => {});
+  const id = req.user._id;
+  User.findByIdAndUpdate(id, { avatar }, { new: true, runValidators: true })
+    .then((user) => { res.status(200).send({ data: user }); });
 };
 const updateUser = (req, res) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.params.userId, { name, about }).then((user) => {});
+  const id = req.user._id;
+  User.findByIdAndUpdate(id, { name, about }, { new: true, runValidators: true })
+    .then((user) => { res.status(200).send({ data: user }); });
 };
 
 module.exports = {
