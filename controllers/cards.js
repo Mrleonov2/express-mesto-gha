@@ -34,7 +34,7 @@ const deleteCard = (req, res) => {
       if (!data) {
         res.status(NotFoundError).send({ message: 'Карточка с указанным _id не найдена' });
       }
-      res.send(data);
+      res.status(SuccesStatusCode).send(data);
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
@@ -53,10 +53,10 @@ const likeCard = (req, res) => {
     { new: true },
   ).then((card) => {
     if (!card) {
-      res.status(NotFoundError)
+      return res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
     }
-    res.status(SuccesStatusCode).send(card);
+    return res.status(SuccesStatusCode).send(card);
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
@@ -73,10 +73,10 @@ const dislikeCard = (req, res) => {
     { new: true },
   ).then((card) => {
     if (!card) {
-      res.status(NotFoundError)
+      return res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
     }
-    res.status(SuccesStatusCode).send(card);
+    return res.status(SuccesStatusCode).send(card);
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
