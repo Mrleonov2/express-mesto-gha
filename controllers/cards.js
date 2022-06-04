@@ -36,7 +36,13 @@ const deleteCard = (req, res) => {
       }
       res.send(data);
     })
-    .catch(() => res.status(DefaultError).send({ message: 'Произошла ошибка' }));
+    .catch((err) => {
+      if (err.kind === 'ObjectId') {
+        res.status(BadReqestError)
+          .send({ message: 'Переданы некорректные данные для постановки лайка' });
+        res.status(DefaultError).send({ message: 'Произошла ошибка' });
+      }
+    });
 };
 
 const likeCard = (req, res) => {
