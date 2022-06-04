@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, _res, next) => {
   req.user = {
-    _id: '6298d84034143be3aadda8a7',
+    _id: '629b79109ec6b0965dea90f',
   };
   next();
 });

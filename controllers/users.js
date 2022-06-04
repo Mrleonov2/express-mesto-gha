@@ -19,14 +19,16 @@ const getUser = (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        res
-          .status(NotFoundError)
-          .send({ message: 'Пользователь по указанному _id не найден' });
+        res.status(NotFoundError).send({ message: 'Пользователь по указанному _id не найден' });
       }
 
       res.status(SuccesStatusCode).send(user);
     })
-    .catch(() => {
+    .catch((err) => {
+      if (err.kind === 'ObjectId') {
+        res.status(BadReqestError)
+          .send({ message: 'Переданы некорректный _id' });
+      }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
 };

@@ -40,8 +40,8 @@ const deleteCard = (req, res) => {
       if (err.kind === 'ObjectId') {
         res.status(BadReqestError)
           .send({ message: 'Переданы некорректные данные для постановки лайка' });
-        res.status(DefaultError).send({ message: 'Произошла ошибка' });
       }
+      res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
 };
 
