@@ -26,8 +26,7 @@ const getUser = (req, res) => {
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        res.status(BadReqestError)
-          .send({ message: 'Переданы некорректный _id' });
+        res.status(BadReqestError).send({ message: 'Id is not correct' });
       }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });

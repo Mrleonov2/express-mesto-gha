@@ -53,10 +53,10 @@ const likeCard = (req, res) => {
     { new: true },
   ).then((card) => {
     if (!card) {
-      return res.status(NotFoundError)
+      res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
     }
-    return res.status(SuccesStatusCode).send(card);
+    res.status(SuccesStatusCode).send(card);
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
@@ -73,10 +73,10 @@ const dislikeCard = (req, res) => {
     { new: true },
   ).then((card) => {
     if (!card) {
-      return res.status(NotFoundError)
+      res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
     }
-    return res.status(SuccesStatusCode).send(card);
+    res.status(SuccesStatusCode).send(card);
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
