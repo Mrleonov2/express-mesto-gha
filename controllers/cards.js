@@ -1,6 +1,6 @@
 const Card = require('../models/card');
 
-const BadReqestError = 400;
+const BadRequestError = 400;
 
 const NotFoundError = 404;
 
@@ -22,7 +22,7 @@ const createCard = (req, res) => {
     .then((user) => { res.status(SuccesStatusCode).send(user); })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(BadReqestError)
+        res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные при создании карточки' });
       }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
@@ -34,11 +34,11 @@ const deleteCard = (req, res) => {
       if (!data) {
         res.status(NotFoundError).send({ message: 'Карточка с указанным _id не найдена' });
       }
-      res.status(SuccesStatusCode).send(data);
+      res.status(SuccesStatusCode);
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        res.status(BadReqestError)
+        res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для постановки лайка' });
       }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
@@ -60,7 +60,7 @@ const likeCard = (req, res) => {
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        res.status(BadReqestError)
+        res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для постановки лайка' });
       } res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
@@ -80,7 +80,7 @@ const dislikeCard = (req, res) => {
   })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        res.status(BadReqestError)
+        res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для снятия лайка' });
       } res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });

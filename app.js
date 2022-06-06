@@ -18,7 +18,7 @@ app.use(require('./routes/users'));
 app.use(require('./routes/cards'));
 
 app.use((req, res) => { res.status(404).send({ message: 'Страница по указанному маршруту не найдена' }); });
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect('mongodb://localhost:27017/mestodb');
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
