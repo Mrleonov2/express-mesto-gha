@@ -24,6 +24,7 @@ const createCard = (req, res) => {
       if (err.name === 'ValidationError') {
         res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные при создании карточки' });
+        return;
       }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
@@ -33,6 +34,7 @@ const deleteCard = (req, res) => {
     .then((data) => {
       if (!data) {
         res.status(NotFoundError).send({ message: 'Карточка с указанным _id не найдена' });
+        return;
       }
       res.status(SuccesStatusCode).send(data);
     })
@@ -40,6 +42,7 @@ const deleteCard = (req, res) => {
       if (err.kind === 'ObjectId') {
         res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для постановки лайка' });
+        return;
       }
       res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
@@ -48,13 +51,13 @@ const deleteCard = (req, res) => {
 const likeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   ).then((card) => {
     if (!card) {
       res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
+      return;
     }
     res.status(SuccesStatusCode).send(card);
   })
@@ -62,6 +65,7 @@ const likeCard = (req, res) => {
       if (err.kind === 'ObjectId') {
         res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для постановки лайка' });
+        return;
       } res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
 };
@@ -75,6 +79,7 @@ const dislikeCard = (req, res) => {
     if (!card) {
       res.status(NotFoundError)
         .send({ message: 'Передан несуществующий _id карточки' });
+      return;
     }
     res.status(SuccesStatusCode).send(card);
   })
@@ -82,7 +87,9 @@ const dislikeCard = (req, res) => {
       if (err.kind === 'ObjectId') {
         res.status(BadRequestError)
           .send({ message: 'Переданы некорректные данные для снятия лайка' });
-      } res.status(DefaultError).send({ message: 'Произошла ошибка' });
+        return;
+      }
+      res.status(DefaultError).send({ message: 'Произошла ошибка' });
     });
 };
 module.exports = {
