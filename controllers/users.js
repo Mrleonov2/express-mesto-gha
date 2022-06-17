@@ -7,11 +7,11 @@ const NotFoundError = require('../errors/NotFoundError');
 
 const saltRounds = 10;
 const MONGO_DUPLICATE_KEY_CODE = 11000;
-const SuccesStatusCode = 200;
+
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.status(SuccesStatusCode).send(users);
+      res.send(users);
     })
     .catch(next);
 };
@@ -22,7 +22,7 @@ const getUser = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Пользователь по указанному _id не найден'));
       }
-      return res.status(SuccesStatusCode).send(user);
+      return res.send(user);
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
@@ -58,7 +58,7 @@ const createUser = (req, res, next) => {
     name, about, avatar, email, password: hash,
   })
     .then((user) => {
-      res.status(SuccesStatusCode).send({
+      res.send({
         name: user.name,
         about: user.about,
         avatar: user.avatar,
@@ -82,7 +82,7 @@ const updateAvatar = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Пользователь с указанным _id не найден'));
       }
-      return res.status(SuccesStatusCode).send(user);
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -99,7 +99,7 @@ const updateUser = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Пользователь с указанным _id не найден'));
       }
-      return res.status(SuccesStatusCode).send(user);
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

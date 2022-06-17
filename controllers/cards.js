@@ -3,17 +3,15 @@ const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 
-const SuccesStatusCode = 200;
-
 const getCards = (req, res, next) => {
   Card.find({}).populate('owner').then((cards) => {
-    res.status(SuccesStatusCode).send(cards);
+    res.send(cards);
   }).catch(next);
 };
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: { _id: req.user._id } })
-    .then((card) => { res.status(SuccesStatusCode).send(card); })
+    .then((card) => { res.send(card); })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки'));
@@ -25,7 +23,7 @@ const deleteCard = (req, res, next) => {
   const deleteCardHandler = () => {
     Card.findByIdAndRemove(req.params.cardId)
       .then(() => {
-        res.status(SuccesStatusCode).send({ message: 'Карточка удалена' });
+        res.send({ message: 'Карточка удалена' });
       })
       .catch((err) => {
         if (err.kind === 'ObjectId') {
