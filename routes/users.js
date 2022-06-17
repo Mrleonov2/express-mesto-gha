@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  getUser, getUsers, createUser, updateUser, updateAvatar, getCurrentUser,
+  getUser, getUsers, updateUser, updateAvatar, getCurrentUser,
 } = require('../controllers/users');
 const regExp = require('../utils/regExp');
 
-router.post('/users', createUser);
 router.get('/users/me', getCurrentUser);
 router.get('/users', getUsers);
 router.get('/users/:userId', celebrate({
