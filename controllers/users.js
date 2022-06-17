@@ -5,7 +5,6 @@ const BadRequestError = require('../errors/BadRequestError');
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
 const saltRounds = 10;
 const MONGO_DUPLICATE_KEY_CODE = 11000;
 const SuccesStatusCode = 200;
@@ -118,9 +117,9 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-code', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, 'secret-code', { expiresIn: '1d' });
       res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
+        maxAge: 3600000 * 24 * 1,
         httpOnly: true,
       });
       res.send({ token });
